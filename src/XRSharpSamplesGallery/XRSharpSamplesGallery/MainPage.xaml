@@ -1,0 +1,40 @@
+﻿<sdk:Page x:Class="XRSharpSamplesGallery.MainPage"
+          xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+          xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+          xmlns:local="clr-namespace:XRSharpSamplesGallery"
+          xmlns:menu="clr-namespace:XRSharpSamplesGallery.Menu"
+          xmlns:other="clr-namespace:XRSharpSamplesGallery.Other"
+          xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+          xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+          xmlns:xr="http://xrsharp.io/xr"
+          mc:Ignorable="d"
+          CustomLayout="True">
+    
+    <Grid>
+
+        <xr:Root3D Name="Root3DInstance" ColorManagement="True" EnterXR="OnEnterXR" ExitXR="OnExitXR"
+                   CameraPosition="{Binding SelectedMenuItem.CameraOptions.Position}" CameraRotation="{Binding SelectedMenuItem.CameraOptions.Rotation}">
+
+            <xr:Canvas3D>
+                <xr:HtmlPresenter>
+                    <a-entity light="type: ambient; color: #BBB"></a-entity>
+                    <a-entity light="type: directional; color: #FFF; intensity: 0.3" position="-0.5 1 1"></a-entity>
+                </xr:HtmlPresenter>
+                <other:Environment3D xr:Canvas3D.X="0.5" xr:Canvas3D.Y="1.5" xr:Canvas3D.Z="-0.8"/>
+                <menu:Menu3D Name="Menu3DInstance" Visibility="Collapsed" Rotation="0 30 0" xr:Canvas3D.IsDraggable="True"
+                             xr:Canvas3D.X="-0.45" xr:Canvas3D.Y="0.76" xr:Canvas3D.Z="-0.40"/>
+                <xr:ContentControl3D x:Name="MainContainer" Content="{Binding Content}"
+                                     xr:Canvas3D.X="-0.20" xr:Canvas3D.Y="0.76" xr:Canvas3D.Z="-0.60"/>
+            </xr:Canvas3D>
+        </xr:Root3D>
+
+        <other:ResponsivePane x:Name="MenuResponsivePane">
+            <menu:Menu2D/>
+        </other:ResponsivePane>
+
+        <other:ViewSourcePane x:Name="ViewSourcePane" SourcePaths="{Binding SelectedMenuItem.ViewSourceFilesLocation}"  FontSize="18" FontWeight="Bold" Padding="5" />
+
+    </Grid>
+
+</sdk:Page>
